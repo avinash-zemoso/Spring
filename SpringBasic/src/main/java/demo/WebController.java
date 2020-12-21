@@ -43,7 +43,7 @@ public class WebController {
     @RequestMapping(value = "/findbyid", method = RequestMethod.GET)
     public String findById(@RequestParam("id") long id){
         String result = "";
-        result = repository.findOne(id).toString();
+        result = repository.findById(id).toString();
         return result;
     }
 
@@ -60,7 +60,8 @@ public class WebController {
 
     @RequestMapping(value = "/deletebyid", method = RequestMethod.DELETE)
     public String delete(@RequestParam("id") long id){
-        repository.delete(id);
+        Customer customer = repository.findById(id).orElseThrow();
+        repository.delete(customer);
         return "done";
     }
 
